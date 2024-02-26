@@ -1,0 +1,107 @@
+<main class="profile">
+  <div class="row">
+    <div class="col s12 m12">
+      <div class="card">
+        <div class="card-image">
+          <h3><%= @item.title %> <span class="status status<%= @item.item_status %>"></span></h3>
+          <% if @item.secondary_group %>
+            <span><%= @item.item_status %></span>
+          <% end %>
+          <% unless @item.council_level.blank? %>
+            <span class="council-level"><%= @item.council_level %></span>
+          <% end %>
+        </div>
+        <div class="card-stacked">
+          <!-- <div class="card-content">
+            <% unless @item.description.blank? %>
+              <p><%= @item.description %></p>
+            <% end %>
+          </div> -->
+          <div class="card-action no-border row">
+            <div class="col s12 m12">
+              <% unless @item.address.blank? %>
+                <p><i class="material-icons">location_city</i> <%= @item.address %></p>
+              <% end %>
+            </div>
+            <div class="col no-min-height">
+              <% unless @item.phone.blank? %>
+                <p><%= link_to "tel:#{@item.phone}", class: "waves-effect waves-light blue-grey lighten-2 btn" do %>
+                  <i class="material-icons left">phone</i>
+                  <%= @item.phone %>
+                  <% end %>
+                </p>
+              <% end %>
+            </div>
+            <div class="col no-min-height">
+              <% unless @item.cell_phone.blank? %>
+                <p><%= link_to "tel:#{@item.cell_phone}", class: "waves-effect waves-light blue-grey lighten-2 btn" do %>
+                  <i class="material-icons left">phone_iphone</i>
+                  <%= @item.cell_phone %>
+                  <% end %>
+                </p>
+              <% end %>
+            </div>
+            <div class="col no-min-height">
+              <% unless @item.e_mail.blank? %>
+                <p><%= link_to "mailto:#{@item.e_mail}", class: "waves-effect waves-light blue-grey lighten-2 btn" do %>
+                  <i class="material-icons left">email</i>
+                  <%= @item.e_mail %>
+                  <% end %>
+                </p>
+              <% end %>
+            </div>
+
+            <div class="col no-min-height right-date council-day">
+              <% unless @item.council_day.blank? %>
+                <p><%= @item.council_day %></p>
+              <% end %>
+            </div>
+
+            <div class="col no-min-height right-date">
+              <% unless @item.council_day_date.blank? %>
+                <span>DATUM DANA VIJEĆA</span>
+                <p><%= l @item.council_day_date %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%= render partial: "fields_#{@group_type}", locals: {item: @item} %>
+      <div class="card-action no-border row show_buttons">
+        <div class="col s10 m10 end-align">
+          <%= link_to documents_new_path(group_id: @item.id), class: "waves-effect waves-light btn" do %>
+            <i class="material-icons left">post_add</i>Dodaj dokument
+          <% end %>
+          <%= link_to entry_new_path(group_id: @item.id), class: "waves-effect waves-light btn" do %>
+            <i class="material-icons left">add_comment</i>Dodaj zapis
+          <% end %>
+        </div>
+        <div class="col s2 m2 end-align">
+          <%= link_to @group_type == "primary" ? customer_groups_edit_path(@item.id) : organisations_edit_path(@item.id), class: "waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text" do %>
+            <i class="material-icons right">edit</i>Uredi
+          <% end %>
+        </div>
+      </div>
+      <h4>Zapisi i dokumenti</h4>
+      <br>      
+      <% @statuses.each do |status| %>
+        <% next if status.blank? %>
+        <a href="#" class="status_toggle"><h5><%= status %></h5></a>
+        <section class=<%= @view == "list" ? "collection hidden" : "cards hidden" %>>
+          <% @items.where(item_status: status).each do |item| %>
+            <%= render partial: "components/#{@view == "list" ? "list_item" : "card"}", locals: {data: item, show_all: true} %>
+          <% end %>
+        </section>
+      <% end %>
+      <% if !@items.where(item_status: "").blank? %>
+        <a href="#" class="status_toggle"><h5>Ostalo</h5></a>
+        <section class=<%= @view == "list" ? "collection hidden" : "cards hidden" %>>
+          <% @items.where(item_status: ["", nil]).each do |item| %>
+            <%= render partial: "components/#{@view == "list" ? "list_item" : "card"}", locals: {data: item, show_all: true} %>
+          <% end %>
+        </section>
+      <% end %>
+    </div>
+  </div>
+</main>

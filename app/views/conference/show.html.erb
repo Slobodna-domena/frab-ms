@@ -1,0 +1,42 @@
+<main>
+  <section class="collection">
+  </section>
+  <%= render partial: "components/search", locals: {path: conference_path(params[:id])} %>
+
+  <section class="collection">
+    <%= link_to "Show all participants", show_people_path(params[:id]) %>
+    <table>
+       <thead>
+         <tr>
+             <th>Name</th>
+             <th>Paper Type</th>
+             <th>Status</th>
+             <th>Reviewed(Accepted)</th>
+             <th>Actions</th>
+         </tr>
+       </thead>
+
+       <tbody>
+         <% @papers.each do |item| %>
+           <tr>
+             <td><%= item.event.title %></td>
+             <td><%= item.event.event_type %></td>
+             <td><% if item.finished? %>
+               <i class="material-icons">check</i>
+             <% else %>
+              <i class="material-icons">report</i>
+             <% end %>
+            </td>
+            <td><%= item.event.event_ratings.where(peer: true).size %> (<%= UserAdapter.all.select{|ua| ua.accepted.include?(item.id)}.size %>)</td>
+             <td><%= link_to paper_path(item.id) do %>
+                 <i class="material-icons">edit</i>
+               <% end %>
+             </td>
+           </tr>
+         <% end %>
+       </tbody>
+     </table>
+
+
+  </section>
+</main>

@@ -1,0 +1,11 @@
+<main>
+  <section class="forms">
+    <h4>Dodaj korisnika</h4>
+    <%= simple_form_for @item, url: create_path do |f| %>
+      <%= format_errors flash[:error] %>
+      <%= hidden_field_tag "model", "user" %>
+      <%= hidden_field_tag "redirect_to", users_url %>
+      <%= render partial: "form_fields", locals: {f: f} %>
+    <% end %>
+  </section>
+</main>

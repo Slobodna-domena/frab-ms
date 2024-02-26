@@ -1,0 +1,13 @@
+<main class="form">
+  <section class="forms">
+    <h4>Dodaj <%= @item_type == "entry" ? "zapis" : "dokument" %></h4>
+    <%= format_errors flash[:error] %>
+    <%= simple_form_for @item, url: create_path do |f| %>
+      <%= hidden_field_tag "model", "item" %>
+      <%= render partial: "form_fields_left", locals: {f: f} %>
+  </section>
+  <aside>
+    <%= render partial: "form_fields_right", locals: {f: f} %>
+  </aside>
+  <% end %>  
+</main>

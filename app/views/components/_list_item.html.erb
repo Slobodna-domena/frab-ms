@@ -1,0 +1,10 @@
+<%= link_to paper_path(data.id), class: "collection-item" do %>
+  <% if !data.finished? %>
+    <span class="dot"></span>
+  <% end %>
+  <%= data.description.blank? ? data.title : data.description %>
+  <%= data.event.event_type %>
+  <% if data.documents.any? %>
+    <i class="material-icons force-right">attachment</i>
+  <% end %>
+<% end %>

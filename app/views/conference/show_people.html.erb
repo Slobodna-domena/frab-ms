@@ -1,0 +1,76 @@
+<main>
+  <section class="collection">
+  </section>
+  <%= render partial: "components/search", locals: {path: show_people_path(params[:id])} %>
+
+  <section class="collection">
+    <%= link_to "Show all papers", conference_path(params[:id]) %>
+    <% if Payment::PAYMENT_ENABLED %>
+      <table>
+         <thead>
+           <tr>
+              <th>ID</th>
+               <th>Name</th>
+               <th>Email</th>
+               <th>Last offer requested time</th>
+               <th>Student ID</th>
+               <th>Paid</th>
+               <th>Actions</th>
+           </tr>
+         </thead>
+
+         <tbody>
+           <% @people.each do |item| %>
+             <tr>
+               <td><%= item.user.id %></td>
+               <td><%= item.first_name %> <%= item.last_name %></td>
+               <td><%= item.user.email %></td>
+               <td><%= (!item.user.payment.nil? && !item.user.payment.request_date.nil?) ? "#{item.user.payment.request_date.strftime("%d.%m.%Y")}" : "-" %></td>
+               <td><%= (!item.user.payment.nil? && !item.user.payment.document.nil? && item.user.payment.document.normal.url) ? link_to("Picture",item.user.payment.document.normal.url, target: :blank) : "-" %></td>
+               <td><% if item.user.user_adapter && item.user.user_adapter.paid %>
+                 <i class="material-icons">check</i>
+               <% else %>
+                <i class="material-icons">report</i>
+               <% end %>
+              <% if item.user.user_adapter && item.user.user_adapter.paid %>
+                <td><%= link_to "Mark as unpaid", mark_paid_path(item.user.id), method: :post %></td>
+              <% else %>
+                <td><%= link_to "Mark as paid", mark_paid_path(item.user.id), method: :post %></td>
+              <% end %>
+             </tr>
+           <% end %>
+         </tbody>
+       </table>
+    <% else %>
+      <table>
+         <thead>
+           <tr>
+               <th>Name</th>
+               <th>Email</th>
+               <th>Submitted/Reviewed</th>
+               <th>Actions</th>
+           </tr>
+         </thead>
+
+         <tbody>
+           <% @people.each do |item| %>
+             <tr>
+               <td><%= item.first_name %> <%= item.last_name %></td>
+               <td><%= item.user.email %></td>
+               <% a = item.user.get_papers(@conference).size %>
+               <% b = item.user.papers_evaluated(@conference.id) %>
+               <% if a*3 <= b %>
+                <td style="color:green"><%= a %>/<%= b %></td>
+               <% else %>
+                <td style="color:red"><%= a %>/<%= b %></td>
+              <% end %>
+              <td><%= link_to "Send email", send_email_to_path(item.id, id: params[:id]) %></td>
+             </tr>
+           <% end %>
+         </tbody>
+       </table>
+       <% end %>
+
+
+  </section>
+</main>

@@ -1,0 +1,76 @@
+<%= hidden_field_tag "redirect_to", customer_group_show_url(@item.id ? @item.id : "next") %>
+<%= f.input :title %>
+<%= f.input :parent_id, collection: CustomerGroup.active.roots.order(id: :desc) %>
+<%= f.input :description, input_html: {class: "materialize-textarea"} %>
+<%= f.input :item_status, collection: codes_for("Statusi") %>
+<label>
+<%= f.check_box :archived, id: "archived", class: "filled-in" %>
+<span>Arhiva</span>
+</label>
+<br><br><br>
+<%= f.input :address %>
+<%= f.input :phone %>
+<%= f.input :cell_phone %>
+<%= f.input :e_mail %>
+<%= f.input :election_date, as: :string, input_html: {class: "datepicker"} %>
+<%= f.input :session_date, as: :string, input_html: {class: "datepicker"} %>
+<br><br><br>
+<%= f.input :oib %>
+<%= f.input :iban %>
+<%= f.input :poziv_na_broj %>
+<%= f.input :payment_address %>
+<br><br><br>
+<h4>Kontakt osobe </h4>
+<h5>Predsjednik</h5>
+<%= f.input :president_name %>
+<%= f.input :president_email %>
+<%= f.input :president_phone %>
+<%= f.input :president_cellphone %>
+<h5>Podpredsjednik</h5>
+<%= f.input :vice_president_name %>
+<%= f.input :vice_president_email %>
+<%= f.input :vice_president_phone %>
+<%= f.input :vice_president_cellphone %>
+<h5>Tajnik</h5>
+<%= f.input :secretary_name %>
+<%= f.input :secretary_email %>
+<%= f.input :secretary_phone %>
+<%= f.input :secretary_cellphone %>
+<br><br><br>
+<label>
+  <%= f.check_box :space, class: "filled-in" %>
+  <span>Prostor</span>
+</label>
+<%= f.input :space_description, input_html: {class: "materialize-textarea"} %>
+<label>
+  <%= f.check_box :equipment, class: "filled-in" %>
+  <span>Oprema za rad</span>
+</label>
+<%= f.input :equipment_description, input_html: {class: "materialize-textarea"} %>
+<label>
+  <%= f.check_box :jlrs_resorces, class: "filled-in" %>
+  <span>Sredstva od JLRS </span>
+</label>
+<%= f.input :jlrs_resorces_description, input_html: {class: "materialize-textarea"} %>
+<label>
+  <%= f.check_box :fees, class: "filled-in" %>
+  <span>Naknade vijećnicima</span>
+</label>
+<%= f.input :fees_description, input_html: {class: "materialize-textarea"} %>
+<br><br>
+<%= f.input :council_members, input_html: {class: "has_editor_minimal"} %>
+<br>
+<%= f.input :council_day_date, as: :string, input_html: {class: "datepicker"} %>
+<%= f.input :council_day %>
+<%= f.input :proposer %>
+<%= f.input :keywords %>
+<%= f.input :council_level, collection: %W(Općinsko Gradsko Županijsko) %>
+
+<%= link_to :back, class: "btn waves-effect waves-light blue-grey lighten-2" do %>
+  <i class="material-icons left">cancel</i>
+  Otkaži
+<% end %>&nbsp;
+<%= button_tag(type: 'submit', class: "btn waves-effect waves-light") do %>
+  <i class="material-icons left">save</i>
+  Spremi
+<% end %>

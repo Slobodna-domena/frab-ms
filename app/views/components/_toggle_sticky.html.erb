@@ -1,0 +1,10 @@
+<%= form_tag paper_skip_path(data.id) do %>
+  <p class="smaller-bottom-maring">
+    Are you sure you want to skip this paper?
+    <label>This action cannot be undone. You will not be able to review this paper in the future.</label>
+  </p>
+
+  <button type="submit" class="waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text right">
+    <i class="material-icons left">warning</i>Yes
+  </button>
+<% end %>

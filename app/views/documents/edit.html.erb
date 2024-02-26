@@ -1,0 +1,14 @@
+<%= simple_form_for @item, url: update_path do |f| %>
+<%= hidden_field_tag "model", "item" %>
+<%= hidden_field_tag "id", @item.id %>
+<main class="form">
+  <section class="forms">
+    <h4>Uredi <%= @item_type == "entry" ? "zapis" : "dokument" %></h4>
+    <%= format_errors flash[:error] %>
+    <%= render partial: "form_fields_left", locals: {f: f} %>
+  </section>
+  <aside>
+    <%= render partial: "form_fields_right", locals: {f: f} %>
+  </aside>
+</main>
+<% end %>

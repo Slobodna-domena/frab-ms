@@ -1,0 +1,46 @@
+<main>
+  <% if @admin %>
+    <h3>Welcome to FRAB Peer Review microservice - Administration</h3>
+    <section class="collection">
+    </section>
+    <% @user_conferences.each do |conference| %>
+      <h3><%= conference.title %></h3>
+        <section class="collection">
+          <p>Number of users: <%= conference.number_of_people%></p>
+          <p>Number of papers: <%= conference.number_of_papers%></p>
+          <p>Number of reviewed papers: <%= conference.number_of_papers%></p>
+          <p>Number of finished papers: <%= conference.number_of_finished_papers %></p>
+          <p>Call for participation: <%= conference.call_for_participation.start_date %> to <%= conference.call_for_participation.end_date %></p>
+        </section>
+    <% end %>
+  <% else %>
+    <h3>Welcome <%= current_user.full_name %>,</h3>
+    <section class="collection">
+      <p>Follow the instructions below to review papers submitted in the given conference. If you have any questions or you encounter bugs, feel free to contact us at <a href="mailto:support@odrast.hr">support@odrast.hr</a>  </p>
+    </section>
+
+
+    <% @user_conferences.each do |conference| %>
+      <h3><%= conference.title %>  <progress value="<%= current_user.papers_evaluated(conference.id) %>" max="<%= current_user.get_papers(conference.id).size*3 %>"></progress><span id="progress_span"><%= current_user.papers_evaluated(conference.id) %>/<%= current_user.get_papers(conference.id).size*3 %></span></h3>
+      <p>You need to review a total of <%= current_user.get_papers(conference.id).size*3 %> papers. You have finished reviewing <%= current_user.papers_evaluated(conference.id) %> papers.</p>
+
+      <section class="cards collection">
+        <% @related[conference.id].each do |item| %>
+          <%= render partial: "components/card", locals: {data: item, conference: conference} %>
+        <% end %>
+      </section>
+
+      <% if @related[conference.id].size < current_user.get_papers(conference.id).size*3 %>
+        <p>You're out of papers to review. Please contact us for more information.</p>
+      <% end %>
+
+      <% if current_user.papers_evaluated(conference.id) == current_user.get_papers(conference.id).size*3 %>
+        <p>You have finished the review process. Thank you for participating in peer reviews.</p>
+      <% end %>
+
+      <br>
+      <br>
+    <% end %>
+  <% end %>
+
+</main>

@@ -1,0 +1,11 @@
+<main class="form">
+  <section class="forms">
+    <h4>Uredi <%= @title_single.downcase %></h4>
+    <%= simple_form_for @item, url: update_path do |f| %>
+      <%= format_errors flash[:error] %>
+      <%= hidden_field_tag "model", "customer_group" %>
+      <%= hidden_field_tag "id", @item.id %>
+      <%= render partial: "form_fields_#{@group_type}", locals: {f: f} %>
+    <% end %>
+  </section>
+</main>

@@ -1,0 +1,20 @@
+<%= form_tag path, class: "searchHome search", method: :get do %>
+  <div class="searchTxt input-field">
+    <input type="hidden" name="prikaz" value="<%= params[:prikaz] %>">
+    <input id="search_txt" type="text" class="validate" name="query">
+    <label for="search_txt">Search</label>
+  </div>
+  <%= button_tag(type: 'submit', class: "btn waves-effect waves-light") do %>
+    <i class="material-icons right">search</i>
+    Search
+  <% end %>
+  <!-- <div class="searchSettings">
+    <div id="searchSettings" class="icon material-icons mdc-icon-button">settings</div>
+    <div class="selectorTool">
+      <div class="<%= (!params[:prikaz] or params[:prikaz] == "academic") ? "chip teal lighten-1 white-text" : "chip" %>" data-id="academic">Academic</div>
+      <div class="<%= params[:prikaz] == "practical" ? "chip teal lighten-1 white-text" : "chip" %>" data-id="practical">Practical</div>
+      <div class="<%= params[:prikaz] == "all" ? "chip teal lighten-1 white-text" : "chip" %>" data-id="all">All</div>
+      <input type="hidden" name="searchScope" id="searchScope" value="all">
+    </div>
+  </div> -->
+<% end %>

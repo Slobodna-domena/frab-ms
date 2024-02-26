@@ -1,0 +1,19 @@
+<%= hidden_field_tag "redirect_to", item_url(@item.id ? @item.id : "next") %>
+<%= f.input :item_type, as: :hidden, input_html: {value: @item_type} %>
+<%= f.input :title %><%= f.error :title %>
+<%= f.association :customer_groups, collection: CustomerGroup.active, input_html: { multiple: true, class: "selectize"} %>
+<%= f.association :user, collection: User.all, input_html: { class: "selectize"} %>
+<%= f.input :item_status, collection: codes_for(@item_type == "document" ? "Statusi dokumenata" : "Statusi zapisa") %>
+<%= f.input :description, input_html: {class: "materialize-textarea"} %>
+<%= f.input :content, input_html: {class: "has_editor"} %>
+<%= react_component "Files", {documents: @item.documents} %>
+<p>
+  <label>
+  <%= f.check_box :archived, id: "archived", class: "filled-in" %>
+  <span>Arhiva</span>
+  </label>
+</p>
+<%= button_tag(type: 'submit', class: "btn waves-effect waves-light") do %>
+  <i class="material-icons left">save</i>
+  Spremi
+<% end %>

@@ -1,0 +1,41 @@
+{
+  "name": "frab_ms",
+  "private": true,
+  "dependencies": {
+    "@babel/preset-react": "^7.9.4",
+    "@material/button": "",
+    "@material/card": "",
+    "@material/checkbox": "",
+    "@material/chips": "",
+    "@material/data-table": "",
+    "@material/icon-button": "",
+    "@material/ripple": "",
+    "@material/select": "",
+    "@material/textfield": "",
+    "@rails/ujs": "^6.1.0",
+    "@rails/webpacker": "4.2.2",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "css-loader": "^0.28.0",
+    "dart-sass": "^1.25.0",
+    "extract-loader": "^1.0.2",
+    "fibers": "^4.0.0",
+    "file-loader": "^1.1.11",
+    "jquery": "^3.5.1",
+    "sass": "^1.30.0",
+    "sass-loader": "^7.1.0",
+    "selectize": "^0.12.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-reveal": "^1.2.2",
+    "react_ujs": "^2.6.1",
+    "@uppy/core": "^1.10.0",
+    "@uppy/locales": "^1.14.0",
+    "@uppy/react": "^1.6.1",
+    "@uppy/url": "^1.5.12",
+    "@uppy/xhr-upload": "^1.5.8",
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.10.3"
+  }
+}

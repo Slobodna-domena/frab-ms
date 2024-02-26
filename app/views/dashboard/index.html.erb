@@ -1,0 +1,32 @@
+<main>
+  <section>
+    <%= render partial: "components/search", locals: {path: dashboard_path} %>
+  </section>
+
+  <% if !@events.blank? %>
+    <h2>Događanja</h2>
+    <section class="collection">
+      <% @events.order(:day).each do |event| %>
+        <p class="collection-item">
+           <%= event.start_time.strftime("%d.%m.%Y") %> <span> <%= event.title %> </span>
+        </p>
+      <% end %>
+    </section>
+  <% end %>
+
+  <section>
+    <%= link_to dashboard_view_path("card"), class: "btn waves-effect waves-light#{@view != "list" ? " disabled" : nil}" do %>
+      <i class="medium material-icons">apps</i>
+    <% end %>
+    <%= link_to dashboard_view_path("list"), class: "btn waves-effect waves-light#{@view == "list" ? " disabled" : nil}" do %>
+      <i class="medium material-icons">format_list_bulleted</i>
+    <% end %>
+  </section>
+
+  <section class=<%= @view == "list" ? "collection" : "cards" %>>
+    <% @items.each do |item| %>
+      <%= render partial: "components/#{@view == "list" ? "list_item" : "card"}", locals: {data: item} %>
+    <% end %>
+  </section>
+
+</main>

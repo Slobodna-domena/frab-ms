@@ -1,0 +1,24 @@
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "loginForm"}) do |f| %>
+  <h3>Sign up</h3>
+  <p>If you would like to apply to 9th International Degrowth Conference (<a href="https://odrast.hr/"> more info here </a>) and you don't have an account please create your account by filling out the form below.</p>
+  <p><b>Please do not create a new account if you've already submitted a paper or if you've been added as a coauthor to one of the papers.</b></p>
+  <p>You will recieve an email with a link to confirm your account after which you will be able to access the platform to finish the payment. For any additional questions please contact us at <a href="mailto:support@odrast.hr">support@odrast.hr</a></p>
+  <%= f.error_notification %>
+<p><%= flash[:alert] %></p>
+    <div class="input-field">
+      <input id="e_mail" type="text" class="validate" name="user[email]">
+      <label for="e_mail">E-mail</label>
+    <div class="input-field">
+      <input id="password" type="password" class="validate" name="user[password]">
+      <label for="password">Password</label>
+    </div>
+    <div class="input-field">
+      <input id="password_confirmation" type="password" class="validate" name="user[password_confirmation]">
+      <label for="password">Password confirmation</label>
+    </div>
+
+
+  <div class="form-actions">
+    <%= f.button :submit, "Sign up" %>
+  </div>
+<% end %>

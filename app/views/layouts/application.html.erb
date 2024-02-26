@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FRAB Peer Review</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <header class="teal lighten-1">
+    <nav class="teal lighten-1">
+      <div class="nav-wrapper">
+        <% if current_user %>
+        <ul class="hide-on-med-and-down main-menu">
+          <li class="<%= "active" if controller.controller_name == "dashboard" && controller.action_name == "index" %>">
+            <%= link_to root_path do %>
+              <i class="material-icons mdc-button__icon">home</i> Home
+            <% end %>
+          </li>
+          <% if current_user.admin? %>
+            <% current_user.conferences.first(5).each do |conference|  %>
+              <li class="<%= "active" if controller.controller_name == "dashboard" && controller.action_name == "index" %>">
+                <%= link_to conference_path(conference.id) do %>
+                  <i class="material-icons mdc-button__icon">event</i> <%= conference.acronym %>
+                <% end %>
+              </li>
+            <% end %>
+
+          <% end %>
+        </ul>
+        <ul class="hide-on-med-and-down">
+          <li>
+            <%= link_to destroy_user_session_path, method: :delete do %>
+              <i class="material-icons mdc-button__icon">login</i>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+      <% end %>
+    </nav>
+  </header>
+  <%= yield %>
+</body>
+</html>

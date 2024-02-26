@@ -1,0 +1,207 @@
+<ul class="collapsible">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">account_balance</i>Podaci za plaćanje</div>
+    <div class="collapsible-body">
+      <% unless item.oib.blank? %>
+        <span>OIB</span>
+        <p><%= item.oib %></p>
+      <% end %>
+
+      <% unless item.iban.blank? %>
+        <span>IBAN</span>
+        <p><%= item.iban %></p>
+      <% end %>
+
+      <% unless item.poziv_na_broj.blank? %>
+        <span>Poziv na broj</span>
+        <p><%= item.poziv_na_broj %></p>
+      <% end %>
+
+      <% unless item.payment_address.blank? %>
+        <span>Adresa plaćanja</span>
+        <p><%= item.payment_address %></p>
+      <% end %>
+
+    </div>
+  </li>
+
+  <li>
+    <div class="collapsible-header"><i class="material-icons">assignment_ind</i>Kontakti</div>
+    <div class="collapsible-body">
+      <table>
+        <tr>
+          <td></td>
+          <td><span>Ime i prezime</span></td>
+          <td><span>Email</span></td>
+          <td><span>Mobitel</span></td>
+        </tr>
+        <tr>
+          <td class="bold">Predsjednik</td>
+          <td><%= item.president_name %></td>
+          <td><%= item.president_email %></td>
+          <td><%= item.president_phone %></td>
+        </tr>
+        <tr>
+          <td class="bold">Podpredsjednik</td>
+          <td><%= item.vice_president_name %></td>
+          <td><%= item.vice_president_email %></td>
+          <td><%= item.vice_president_phone %></td>
+        </tr>
+        <tr>
+          <td class="bold">Tajnik</td>
+          <td><%= item.secretary_name %></td>
+          <td><%= item.secretary_email %></td>
+          <td><%= item.secretary_phone %></td>
+        </tr>
+      </table>
+      <!-- <h5>Predsjednik</h5>
+      <% unless item.president_name.blank? %>
+        <span>Ime i prezime</span>
+        <p><%= item.president_name %></p>
+      <% end %>
+
+      <% unless item.president_email.blank? %>
+        <span>Email</span>
+        <p><%= item.president_email %></p>
+      <% end %>
+
+      <% unless item.president_phone.blank? %>
+        <span>Telefon</span>
+        <p><%= item.president_phone %></p>
+      <% end %>
+
+      <% unless item.president_cellphone.blank? %>
+        <span>Mobitel</span>
+        <p><%= item.president_cellphone %></p>
+      <% end %>
+
+      <h5>Podpredsjednik</h5>
+      <% unless item.vice_president_name.blank? %>
+        <span>Ime i prezime</span>
+        <p><%= item.vice_president_name %></p>
+      <% end %>
+
+      <% unless item.vice_president_email.blank? %>
+        <span>Email</span>
+        <p><%= item.vice_president_email %></p>
+      <% end %>
+
+      <% unless item.vice_president_phone.blank? %>
+        <span>Telefon</span>
+        <p><%= item.vice_president_phone %></p>
+      <% end %>
+
+      <% unless item.vice_president_cellphone.blank? %>
+        <span>Mobitel</span>
+        <p><%= item.vice_president_cellphone %></p>
+      <% end %>
+
+      <h5>Tajnik</h5>
+      <% unless item.secretary_name.blank? %>
+        <span>Ime i prezime</span>
+        <p><%= item.secretary_name %></p>
+      <% end %>
+
+      <% unless item.secretary_email.blank? %>
+        <span>Email</span>
+        <p><%= item.secretary_email %></p>
+      <% end %>
+
+      <% unless item.secretary_phone.blank? %>
+        <span>Telefon</span>
+        <p><%= item.secretary_phone %></p>
+      <% end %>
+
+      <% unless item.secretary_cellphone.blank? %>
+        <span>Mobitel</span>
+        <p><%= item.secretary_cellphone %></p>
+      <% end %> -->
+    </div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">list</i>Članovi vijeća</div>
+    <div class="collapsible-body">
+      <div class="council-members">
+        <p><%= raw item.council_members %></p>
+      </div>
+
+      <div class="council-dates">
+        <% unless item.election_date.blank? %>
+          <span>Datum izbora vijeća</span>
+          <p><%= l item.election_date %></p>
+        <% end %>
+
+        <% unless item.session_date.blank? %>
+          <span>Datum konstituirajuće sjednice</span>
+          <p><%= l item.session_date if item.session_date %></p>
+        <% end %>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">list</i>Procjena kapaciteta vijeća</div>
+    <div class="collapsible-body">
+
+      <table class="no-border">
+        <tr>
+          <td class="first"><span>Prostor</span></td>
+          <td><span><%= item.space ? "DA" : "NE" %></span></td>
+          <td><%= item.space_description %></td>
+        </tr>
+        <tr>
+          <td class="first"><span>Oprema za rad</span></td>
+          <td><span><%= item.equipment ? "DA" : "NE"  %></span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="first"><span>Sredstva od JLRS </span></td>
+          <td><span><%= item.jlrs_resorces ? "DA" : "NE"  %></span></td>
+          <td><%= item.jlrs_resorces_description %></td>
+        </tr>
+        <tr>
+          <td class="first"><span>Naknade vijećnicima</span></td>
+          <td><span><%= item.fees ? "DA" : "NE"  %></span></td>
+          <td><%= item.fees_description %></td>
+        </tr>
+      </table>
+
+      <!-- <div>
+        <label>
+          <span>Prostor</span>
+          <%= item.space ? "DA" : "NE" %>
+        </label>
+        <p><%= item.space_description %></p>
+      </div>
+      <div>
+        <label>
+          <span>Oprema za rad</span>
+          <%= item.equipment ? "DA" : "NE"  %>
+        </label>
+        <p><%= item.equipment_description %></p>
+      </div>
+      <div>
+        <label>
+          <span>Sredstva od JLRS </span>
+          <%= item.jlrs_resorces ? "DA" : "NE"  %>
+        </label>
+        <p><%= item.jlrs_resorces_description %></p>
+      </div>
+      <div>
+        <label>
+          <span>Naknade vijećnicima</span>
+          <%= item.fees ? "DA" : "NE"  %>
+        </label>
+        <p><%= item.fees_description %></p>
+      </div>
+ -->
+      <br><br>
+
+      <% unless item.keywords.blank? %>
+        <span>Ključne riječi</span>
+        <p><%= item.keywords %></p>
+      <% end %>
+
+
+    </div>
+  </li>
+</ul>

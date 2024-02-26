@@ -1,0 +1,72 @@
+<main class="item">
+  <section>
+    <% if @item.customer_groups.any? %>
+      <p style="margin-bottom: 0px"><%= @item.customer_groups.pluck(:title).join(", ") %></p>
+    <% end %>
+
+    <% unless @item.entry_date.blank? %>
+      <p style="margin-bottom: 5px"><%= l @item.entry_date %></p>
+    <% end %>
+
+    <span>Naziv</span>
+    <h3><%= @item.title %></h3>
+
+    <% unless @item.description.blank? %>
+      <span>Opis</span>
+      <p><%= @item.description %></p>
+    <% end %>
+    <% unless @item.content.blank? %>
+      <span>Bilješka</span>
+      <%= raw @item.content %>
+    <% end %>
+    <% if @item.documents.any? %>
+      <span>Dokumenti</span>
+      <div class="collection">
+        <% @item.documents.each do |doc| %>
+          <%= link_to doc.url, class: "collection-item" do %>
+            <%= doc.identifier %>
+            <span class="right"><%= number_to_human_size(doc.file.size) %></span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% unless @item.item_status.blank? %>
+      <span>Grupa</span>
+      <p><strong><%= @item.item_status %></strong></p>
+    <% end %>
+  </section>
+
+  <% unless @item.item_type == "system"  %>
+    <aside>
+      <% if params[:v] %>
+        <%= link_to "Povratak na aktualnu verziju", request.path %>
+      <% else %>
+        <div>
+          <p>
+          <%= link_to documents_edit_path(@item.id), class: "waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text", style: "width: 120px" do %>
+            <i class="material-icons right">edit</i>Uredi
+          <% end %>
+          </p>
+          <p>
+          <%= link_to documents_new_path(clone: @item.id), class: "waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text" do %>
+            <i class="material-icons right">content_copy</i>Kopiraj
+          <% end %>
+          </p>
+          <p>
+          <%= link_to delete_path("item", @item.id, redirect_to: documents_url), data: {confirm: "Jeste li sigurni da želite obrisati ovaj zapis?"}, class: "waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text", style: "width: 120px" do %>
+            <i class="material-icons right">delete</i>Obriši
+          <% end %>
+          </p>
+        </div>
+        <div>
+          <%= render partial: "components/toggle_sticky", locals: {data: @item} %>
+        </div>
+      <% end %>
+      <!-- <div class="white">
+        <%= history_for @item %>
+      </div> -->
+    </aside>
+  <% end %>
+
+</main>

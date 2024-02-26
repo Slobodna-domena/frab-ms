@@ -1,0 +1,12 @@
+<%= simple_form_for "", url: send_email_path do |f| %>
+  <main class="form">
+    <section class="forms">
+      <h4>Send email to user</h4>
+          <%= f.input :id, as: :hidden, input_html: {value: @conference} %>
+          <%= f.input :email, label: "User email", input_html: {value: @user.email} %>
+          <%= f.input :title, label: "Subject" %>
+          <%= f.input :msg, label: "E-mail content", as: :text %>
+          <%= f.submit "Send" %>
+    </section>
+  </main>
+<% end %>

@@ -1,0 +1,27 @@
+<%= simple_form_for @user, url: update_user_path do |f| %>
+<%= hidden_field_tag "id", @user.id %>
+  <main class="form">
+    <h5>Setup password for your account</h5>
+    <p>Please choose password for your account associated with your email address (<%= @user.email %>). Once you create your account, you will get access to sign up for the Degrowth conference. More information about the confrence can be found on <a href="https://odrast.hr/">this</a> link.
+
+    <section class="forms">
+      <%= f.error_notification %>
+      <div class="form-inputs">
+
+        <%= f.input :password,
+                    label: "Password",
+                    required: true,
+                    autofocus: true,
+                    hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                    input_html: { autocomplete: "new-password" } %>
+        <%= f.input :password_confirmation,
+                    label: "Confirm your new password",
+                    required: true,
+                    input_html: { autocomplete: "new-password" } %>
+      </div>
+      <br>
+      <div class="form-actions">
+        <%= f.button :submit, "Save and continue" %>
+      </div>
+
+<% end %>

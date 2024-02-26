@@ -1,0 +1,59 @@
+<hr>
+<h4>Payment information</h1>
+<div style="border: 1px solid grey; padding: 15px">
+  <div style="width:40%; display: flex; gap: 50px; margin-top: 20px">
+    <p>Country</p>
+    <%= f.country_select :country, include_blank: true %>
+  </div>
+  <% if params[:error] && !params[:error].blank? %>
+   <p style="color:red">You need to select the country you are from in order to generate the offer</p>
+  <% end %>
+  <p>
+    <label>
+    <%= f.check_box :solidarity_fee, id: "archived", class: "filled-in" %>
+    <span>I would like to pay the solidarity fee (60 EUR)</span>
+    </label>
+  </p>
+
+  <p>
+    <label>
+    <%= f.check_box :status, id: "student", class: "filled-in" %>
+    <span>I would like to pay the student fee</span>
+    </label>
+  </p>
+  <% if params[:image_error] && !params[:image_error].blank? %>
+   <p style="color:red"><%= params[:image_error] %></p>
+  <% end %>
+
+  <% if @item.id %>
+    <div id="document_div">
+      <%= f.input :document, :as => :file, label: "Please provide image of your Student ID. You can upload a new image to replace the existing one." %>
+      <% if @item && @item.document && @item.document.present? %>
+        <p>Uploaded image</p>
+        <% if @item.document.normal %>
+          <%= image_tag(@item.document.normal.url) %>
+        <%end %>
+      <% end %>
+      <br>
+    </div>
+  <% end %>
+</div>
+<h4>Billing information</h4>
+<div style="border: 1px solid grey; padding: 15px">
+  <%= f.input :billing_name, label: "Billing name (provide the full name)" %>
+  <%= f.input :billing_address, label: "Billing address (address,city,postal code)" %>
+  <%= f.input :billing_vat, label: "Billing VAT (legal persons) or personal identification number (physical person)", hint: "VAT ID is mandatory for legal persons." %>
+</div>
+<br>
+<% if @item.request_date && (Date.today - @item.request_date.to_date).to_i <= 15 %>
+<p style="color:red">The offer has already been requested on <%= @item.request_date.strftime("%d.%m.%Y %H:%M")%>. Please check your email and make sure it hasn't been added to your spam folder. If you wish to request a new offer please contact us at <a href="mailto:support@odrast.hr">support@odrast.hr</a></p>
+<% else %>
+<% if Date.today <= "31-05-2023".to_date %>
+  <%= button_tag type: 'submit', class: "btn waves-effect waves-light" do %>
+    <i class="material-icons left">credit_card</i>
+    Request offer
+  <% end %>
+<% end %>
+<% end %>
+
+</p>

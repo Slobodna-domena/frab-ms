@@ -1,0 +1,42 @@
+<main class="item">
+  <section>
+    <%= link_to conference_path(@item.event.conference.id), class: "waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text" do %>
+      Back
+    <% end %>
+    <br><br>
+    <span>Title</span>
+    <h3><%= @item.title %></h3>
+
+    <% unless @item.subtitle.blank? %>
+      <span>Subtitle</span>
+      <p><%= @item.subtitle %></p>
+    <% end %>
+
+    <% unless @item.abstract.blank? %>
+      <span>Abstract</span>
+      <p><%= @item.abstract %></p>
+    <% end %>
+
+    <% unless @item.description.blank? %>
+      <span>Description</span>
+      <p><%= @item.description %></p>
+    <% end %>
+
+    <% unless @item.event_type.blank? %>
+      <span>Event type</span>
+      <p><%= @item.event_type %></p>
+    <% end %>
+
+    <% unless @item.classifiers.blank? %>
+      <span>Tags</span>
+      <p><%= raw @item.classifiers.pluck(:name).join(",") %></p>
+    <% end %>
+
+
+    <br>
+  </section>
+
+  <section>
+    <%= render partial: "components/rate", locals: {data: @item} %>
+  <section>
+</main>

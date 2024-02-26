@@ -1,0 +1,41 @@
+<main>
+  <h3>Događanja</h3>
+  <%= button_tag(type: 'button', class: "btn waves-effect waves-light new_event") do %>
+    <i class="material-icons right">add_comment</i>
+    Dodaj događaj
+  <% end %>
+  <div class="new_event">
+    <%= form_tag create_event_path, class: "searchHome search" do %>
+      <div class="col s6">
+        <div class="input-field">
+          <select name="day" required>
+            <% (1..31).each do |i| %>
+            <option value="<%= i %>"><%= i %></option>
+            <% end %>
+          </select>
+          <label>Dan</label>
+        </div>
+        <div class="input-field">
+          <select name="month" required>
+            <% (1..12).each do |i| %>
+            <option value="<%= i %>"><%= i %></option>
+            <% end %>
+          </select>
+          <label>Mjesec</label>
+        </div>
+        <div class="searchTxt input-field">
+          <label for="doc_name">Naziv događaja</label>
+          <input id="title" type="text" class="validate" name="title" required>
+        </div>
+
+        <%= button_tag(type: 'submit', class: "btn waves-effect waves-light") do %>
+          <i class="material-icons left">save</i>
+          Spremi
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <br>
+  <br>
+  <%= render partial: "components/calendar", locals: {data: @events} %>
+</main>

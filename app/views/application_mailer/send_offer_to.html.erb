@@ -1,0 +1,61 @@
+<p>You have signed up for Degrowth Conference in Zagreb. 
+  Please use the following information to finish the payment and confirm your attendance.
+  If you have any other questions feel free to contact us at support@odrast.hr.</p>
+
+<% if  DateTime.now > "2023-04-14 16:00:00 +0200".to_datetime && DateTime.now < "2023-04-17 07:00:00 +0200".to_datetime %>
+  <p><b>You have now registered for the Early Bird fee. In case you have any additional questions we will reply to you as soon as possible.  </b></p>
+<% end %>
+<p>The following offer has been requested on <%= @user.payment.request_date.strftime("%d.%m.%Y") %> and is valid until <%= (@user.payment.request_date + 15.days).strftime("%d.%m.%Y") %>.</p>
+
+<table>
+  <th>Billing information</th>
+  <tr>
+    <td>Billing name</td>
+    <td><%= @user.payment.billing_name %></td>
+  </tr>
+  <tr>
+    <td>Billing address</td>
+    <td><%= @user.payment.billing_address %></td>
+  </tr>
+  <tr>
+    <td>Country</td>
+    <td><%= @user.payment.country_name %></td>
+  </tr>
+  <tr>
+    <td>VAT/PIN</td>
+    <td><%= @user.payment.billing_vat %></td>
+  </tr>
+  <tr>
+    <td>Order number</td>
+    <td><%= @user.id %>-<%= @user.payment.request_date.strftime("%d%m%Y%M%H")%></td>
+  </tr>
+  <th>Payment information</th>
+  <tr>
+    <td>Account name</td>
+    <td>DOOR</td>
+  </tr>
+  <tr>
+    <td>Address</td>
+    <td>SLAVKA BATUŠIĆA 7, 10090 ZAGREB, CROATIA</td>
+  </tr>
+  <tr>
+    <td>IBAN</td>
+    <td>HR6023600001503214013</td>
+  </tr>
+  <tr>
+    <td>SWIFT</td>
+    <td>ZABAHR2X</td>
+  </tr>
+  <tr>
+    <td>Bank information</td>
+    <td>ZAGREBAČKA BANKA D.D., TRG BANA JOSIPA JELAČIĆA 10, 10000 ZAGREB</td>
+  </tr>
+  <tr>
+    <td>Amount</td>
+    <td><%= @amount %> EUR</td>
+  </tr>
+  <tr>
+    <td>Payment reference</td>
+    <td><%= @user.id %>-<%= @user.payment.request_date.strftime("%d%m%Y%M%H")%></td>
+  </tr>
+</table>

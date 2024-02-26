@@ -1,0 +1,32 @@
+<div class="card grey lighten-5 <%= current_user.accepted?(data) && !current_user.graded?(data) ? "red_border" : "" %>">
+  <div class="card-content white">
+    <% if current_user.graded?(data) %>
+      <span class="graded-icon"><i class="material-icons right">check</i></span>
+    <% end %>
+    <span class="card-title basic"><%= data.title %></span>
+    <p><%= data.subtitle %></p>
+  </div>
+  <div class="card-reveal">
+    <span class="card-title"><i class="material-icons right">close</i></span>
+    <%= render partial: "components/toggle_sticky", locals: {data: data} %>
+  </div>
+  <div class="card-action">
+    <% if !current_user.graded?(data) %>
+      <% if current_user.accepted?(data) %>
+        <%= link_to paper_grade_path(data.id), class: "waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text" do %>
+          Review paper
+        <% end %>
+      <% else %>
+        <a class="sticky waves-effect waves-gray btn-flat btn-small teal lighten-1 white-text activator">
+            Skip
+        </a>
+        <%= link_to paper_accept_path(data.id), class: "waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text" do %>
+          <i class="material-icons right">check</i>Accept
+        <% end %>
+      <% end %>
+    <% end %>
+    <%= link_to paper_path(data.id), class: "waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text" do %>
+      <i class="material-icons right">arrow_forward</i>Open
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<%= f.input :first_name %>
+<%= f.input :last_name %>
+<%= f.input :email %>
+<%= f.input :password %>
+<%= f.input :password_confirmation %>
+<%= f.input :department, collection: codes_for("SNV odjeli") %>
+<%= button_tag(type: 'submit', class: "btn waves-effect waves-light") do %>
+  <i class="material-icons left">save</i>
+  Spremi
+<% end %>

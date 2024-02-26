@@ -1,0 +1,60 @@
+<%= simple_form_for @item, url: update_path do |f| %>
+<%= hidden_field_tag "id", @item.id %>
+<main class="form">
+  <section class="forms" style="width:100%">
+    <h3>Welcome,</h3>
+    <p>Please follow the instructions for registration and payment for the Degrowth conference. More information about the conference can be found at <a href="https://odrast.hr/">https://odrast.hr/</a>. If you have any questions or you encounter bugs, feel free to contact us at <a href="mailto:support@odrast.hr">support@odrast.hr</a>.
+    </p>
+    <p><b>You can only request a new offer every 15 days.</b> Please keep in mind the deadlines of each payment options noted below and <a href="https://odrast.hr/">here</a>.</p>
+    <p>Keep in mind that your offer will be generated based on the information you provide and the date you request it. Offer will be valid for 15 days after it has been requested after which it will expire and you will need to request a new one.</p>
+    <% if @item.request_date %>
+      <p> You've requested an offer on <%= @item.request_date.strftime("%d.%m.%Y %H:%M")%>. Please check your spam folder if you haven't recieved it in your e-mail. Feel free to contact the support e-mail if you can't find it.</p>
+    <% else %>
+    <p> You haven't requested any offers yet. </p>
+    <% end %>
+    <section class="collection">
+    </section>
+    <h4>Conference fees</h4>
+    <div style="display: flex; gap: 15px; padding-bottom: 20px">
+      <div style="border: 1px solid grey; width: 22%; height: 320px">
+        <div style="background-color: #83dd58; height: 25%; padding: 10px">
+          <h5 style="margin-top: 0px; margin-left: 8px; margin-top: 8px">Solidarity</h5>
+        </div>
+        <div style="padding: 15px">
+          <p>• Early Bird €380 / Regular €460 </p>
+          <p>• extra cost of solidarity fee will be used to support participants from developing countries</p>
+        </div>
+      </div>
+      <div style="border: 1px solid grey; width: 22%; height: 320px">
+        <div style="background-color: #fdf0a6; height: 25%; padding: 10px">
+          <h5 style="margin-top: 0px; margin-left: 8px; margin-top: 8px">Early bird</h5>
+        </div>
+        <div style="padding: 15px">
+          <p>• €320 </p>
+          <p>• March 16 – April 16</p>
+        </div>
+      </div>
+      <div style="border: 1px solid grey; width: 22%; height: 320px">
+        <div style="background-color: #faabb2; height: 25%; padding: 10px">
+          <h5 style="margin-top: 0px; margin-left: 8px; margin-top: 8px">Regular</h5>
+        </div>
+        <div style="padding: 15px">
+          <p>• Regular €400 </p>
+          <p>• April 17 – May 31</p>
+        </div>
+      </div>
+      <div style="border: 1px solid grey; width: 22%; height: 320px">
+        <div style="background-color: #d5c3ff; height: 25%; padding: 10px">
+          <h5 style="margin-top: 0px; margin-left: 8px; margin-top: 8px">Developing</h5>
+        </div>
+        <div style="padding: 15px">
+          <p>• €180 </p>
+          <p>• the list of developing countries can be found <a href="https://odrast.hr/developing-fee/">here</a></p>
+          <p>• person with student status is eligible for this option</p>
+        </div>
+      </div>
+    </div>
+    <%= render partial: "form_fields_left", locals: {f: f} %>
+  </section>
+</main>
+<% end %>

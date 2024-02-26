@@ -1,0 +1,24 @@
+<br>
+<br>
+<h3>Review the paper</h3>
+<p>Use the sliders to give the appropriate grade to the paper. Please keep in mind that the final grade is a sum of each individual metric.</p>
+<%= form_tag paper_rate_path do |f| %>
+  <input type="hidden" name="id">
+  <div class="slidecontainer">
+    <% @conference.review_metrics.each do |rm| %>
+    <label><%= rm.name %></label>
+    <p><%= description_for(rm.id) %></p>
+    <div class="slider_grade">
+      <span id="sloder_span_bad">poor</span>
+      <input type="range" name="<%= rm.name %>" min="1" max="10" value="1" class="slider" id="sloder">
+      <span id="sloder_span">excellent</span>
+    </div>
+
+    <% end %>
+  </div>
+  <label>Comment</label>
+  <textarea type="text" name="note" class="materialize-textarea five-rower"></textarea>
+  <button type="submit" class="waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text right">
+    Confirm
+  </button>
+<% end %>

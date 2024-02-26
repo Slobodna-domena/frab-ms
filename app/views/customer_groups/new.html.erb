@@ -1,0 +1,10 @@
+<main class="form">
+  <section class="forms">
+    <h4>Dodaj <%= @title_single.downcase %></h4>
+    <%= simple_form_for @item, url: create_path do |f| %>
+      <%= format_errors flash[:error] %>
+      <%= hidden_field_tag "model", "customer_group" %>
+      <%= render partial: "form_fields_#{@group_type}", locals: {f: f} %>
+    <% end %>
+  </section>
+</main>

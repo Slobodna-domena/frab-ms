@@ -1,0 +1,51 @@
+<ul class="collapsible">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">account_balance</i>Podaci za plaćanje</div>
+    <div class="collapsible-body">
+      <% unless item.oib.blank? %>
+        <span>OIB</span>
+        <p><%= item.oib %></p>
+      <% end %>
+
+      <% unless item.iban.blank? %>
+        <span>IBAN</span>
+        <p><%= item.iban %></p>
+      <% end %>
+
+      <% unless item.poziv_na_broj.blank? %>
+        <span>Poziv na broj</span>
+        <p><%= item.poziv_na_broj %></p>
+      <% end %>
+
+      <% unless item.payment_address.blank? %>
+        <span>Adresa plaćanja</span>
+        <p><%= item.payment_address %></p>
+      <% end %>
+    </div>
+  </li>
+
+  <li>
+    <div class="collapsible-header"><i class="material-icons">assignment_ind</i>Kontakt odgovorne osobe</div>
+    <div class="collapsible-body">
+      <% unless item.president_name.blank? %>
+        <span>Ime i prezime</span>
+        <p><%= item.president_name %></p>
+      <% end %>
+
+      <% unless item.president_email.blank? %>
+        <span>Email</span>
+        <p><%= item.president_email %></p>
+      <% end %>
+
+      <% unless item.president_phone.blank? %>
+        <span>Telefon</span>
+        <p><%= item.president_phone %></p>
+      <% end %>
+
+      <% unless item.president_cellphone.blank? %>
+        <span>Mobitel</span>
+        <p><%= item.president_cellphone %></p>
+      <% end %>
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,57 @@
+<%= button_tag(type: 'button', class: "btn waves-effect waves-light advanced_search_toggle") do %>
+  <i class="material-icons right">arrow_drop_down</i>
+  Napredno pretraživanje
+<% end %>
+
+<%= form_tag path, class: "searchHome search" do %>
+  <%= hidden_field_tag 'advanced_query', 'adv' %>
+  <div class="row advanced_search">
+
+    <div class="col s6">
+      <div style="display: flex; margin-left: 20px">
+        <div class="input-field">
+          <select name="item_status">
+            <option value="">Svi</option>
+              <% if codes_for("Statusi") %>
+                <% codes_for("Statusi").each do |code| %>
+                  <option value="<%= code[1] %>" <%= "selected" if params[:item_status] == code[1] %>><%= code[0] %></option>
+                <% end %>
+              <% end %>
+          </select>
+          <label><%= "Statusi" %></label>
+        </div>
+    </div>
+  </div>
+  <!-- <div class="col s6">
+    <div class="searchTxt input-field advanced">
+      <label for="doc_name">Naziv dokumenta</label>
+      <input id="doc_name" type="text" class="validate" name="doc_name">
+    </div>
+  </div> -->
+
+
+  <% model.search_by_attributes.each do |column| %>
+    <div class="col s6">
+      <% if model.columns_hash["#{column}"].type == :boolean %>
+        <p style="margin-left: 20px">
+          <label>
+            <input type="checkbox" class="filled-in" name="<%= column %>" />
+            <span><%= translate(model,column)%></span>
+          </label>
+        </p>
+      <% else %>
+        <div class="searchTxt input-field advanced">
+          <label for="<%= column %>"><%= translate(model,column)%></label>
+          <input id="<%= column %>" type="text" class="validate" name="<%= column %>">
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+    <div class="col s12" style="margin-top: 40px">
+    <%= button_tag(type: 'submit', class: "btn waves-effect waves-light") do %>
+      <i class="material-icons right">search</i>
+      Traži
+    <% end %>
+  </div>
+  </div>
+<% end %>

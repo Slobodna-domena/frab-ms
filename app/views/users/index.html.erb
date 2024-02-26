@@ -1,0 +1,36 @@
+<main>
+    <h3>Korisnici</h3>
+    <%= render partial: "components/search", locals: {path: users_path, filters: [["department", "SNV odjeli"]] } %>
+    <div class="add">
+      <%= link_to users_new_path, class: "waves-effect waves-light btn" do %>
+        <i class="material-icons left">group_add</i>Dodaj korisnika
+      <% end %>
+    </div>
+
+    <table class="highlight">
+      <thead>
+        <tr class="">
+          <th class="" role="columnheader" scope="col">Ime i prezime</th>
+          <th class="" role="columnheader" scope="col">SNV odjel</th>
+          <th class="" role="columnheader" scope="col">E-mail</th>
+          <th class="" role="columnheader" scope="col">Zadnja prijava</th>
+          <th class="" role="columnheader" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @items.each do |item| %>
+          <tr>
+            <th scope="row"><%= item.first_name %> <%= item.last_name %></th>
+            <td><%= item.department %></td>
+            <td><%= item.email %></td>
+            <td><%= l item.current_sign_in_at if item.current_sign_in_at %></td>
+            <td>
+              <%= link_to users_edit_path(item.id), class: "waves-effect waves-light btn-small fixedWidth" do %>
+                <i class="material-icons right">edit</i>Uredi
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</main>

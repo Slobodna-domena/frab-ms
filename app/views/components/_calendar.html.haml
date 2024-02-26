@@ -1,0 +1,18 @@
+.calendar-holder.calendar_index_pos
+  %section
+    .row.yellow
+      .event_holder
+        - if @event and @event.any?
+          = render "components/ajax_event"
+        - else
+          .col_9.yellow
+            Danas nema događanja.
+          .col_3.yellow
+      .col_4.yellow
+        = month_calendar do |date|
+          - real_events = @events.select{|e| e.start_time.month == date.month && e.start_time.day == date.day}
+          - if real_events.empty?
+            %span= date.strftime("%d")
+          - else
+            - real_events.each do |event|
+              = link_to date.strftime("%d"), "#", class: "calendar_link", "data-event-id" => date

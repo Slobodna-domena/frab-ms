@@ -1,0 +1,115 @@
+<main class="item">
+  <section>
+    <%= link_to conference_path(@item.event.conference.id), class: "waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text" do %>
+      Back
+    <% end %>
+    <br><br>
+    <span>Title</span>
+    <h3><%= @item.title %></h3>
+
+    <% unless @item.subtitle.blank? %>
+      <span>Subtitle</span>
+      <p><%= @item.subtitle %></p>
+    <% end %>
+
+    <% unless @item.abstract.blank? %>
+      <span>Abstract</span>
+      <p><%= @item.abstract %></p>
+    <% end %>
+
+    <% unless @item.description.blank? %>
+      <span>Description</span>
+      <p><%= @item.description %></p>
+    <% end %>
+
+    <% unless @item.event_type.blank? %>
+      <span>Event type</span>
+      <p><%= @item.event_type %></p>
+    <% end %>
+
+    <% unless @item.event.track.blank? %>
+      <span>Theme</span>
+      <p><%= @item.event.track.name %></p>
+    <% end %>
+
+    <% unless @item.classifiers.blank? %>
+      <span>Tags</span>
+      <p><%= raw @item.classifiers.pluck(:name).join(",") %></p>
+    <% end %>
+
+    <br>
+    <br>
+    <% if current_user && current_user.admin? %>
+      <h5>Reviews</h5>
+      <table>
+         <thead>
+           <tr>
+               <th>User</th>
+               <th>Rating</th>
+               <th>Comment</th>
+               <th>Actions</th>
+           </tr>
+         </thead>
+         <tbody>
+           <% @item.event.event_ratings.where(peer: true).each do |event_rating| %>
+             <tr>
+               <td><%= event_rating.person.public_name %></td>
+               <td><%= event_rating.rating %></td>
+               <td><%= event_rating.comment %></td>
+               <td><%= link_to paper_remove_rating_path(event_rating.id) do %>
+                   <i class="material-icons">delete</i>
+                 <% end %>
+               </td>
+             </tr>
+           <% end %>
+         </tbody>
+       </table>
+       <br>
+       <% if !current_user.user_adapter.papers_evaluated.include?(@item.id) %>
+         <%= link_to paper_grade_path(@item.id, admin: true), class: "waves-effect waves-teal btn-flat btn-small teal lighten-1 white-text" do %>
+           Review paper
+         <% end %>
+       <% end %>
+       <br><br>
+       <% if !UserAdapter.all.select{|ua| ua.accepted.include?(@item.id) && !ua.papers_evaluated.include?(@item.id)}.blank? %>
+         <h5>People who accepted the paper but didn't review it</h5>
+         <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% UserAdapter.all.select{|ua| ua.accepted.include?(@item.id) && !ua.papers_evaluated.include?(@item.id)}.each do |user_adapter| %>
+                <tr>
+                  <td><%= user_adapter.user.person.public_name %></td>
+                  <td><%= user_adapter.user.email %></td>
+                  <td><%= link_to "Send email", send_email_to_path(email: user_adapter.user.person.id, id: @item.event.conference.id) %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+    <% else %>
+      <% if @event_rating %>
+        <% unless @event_rating.rating.blank? %>
+          <div class="slidecontainer">
+            <label>Average number of points from your review</label>
+            <div class="slider_grade">
+              <span id="sloder_span_bad">poor</span>
+              <input type="range" name="value" min="1" max="10" value="<%= @event_rating.rating*2 %>" class="slider" id="sloder_disabled" disabled>
+              <span id="sloder_span">excellent</span>
+            </div>
+          </div>
+        <% end %>
+        <% unless @event_rating.comment.blank? %>
+          <span>Your note</span>
+          <p><%= raw @event_rating.comment %></p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </section>
+
+</main>

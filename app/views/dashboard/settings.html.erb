@@ -1,0 +1,36 @@
+<main>
+  <h3>Postavke</h3>
+
+  <table class="highlight dataTable">
+    <thead>
+      <tr class="">
+        <th class="" role="columnheader" scope="col"></th>
+        <th class="" role="columnheader" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @code_groups.each do |group| %>
+        <tr>
+          <th scope="row"><%= group.title %></th>
+          <td>
+            <%= link_to settings_edit_path(group.id), class: "waves-effect waves-light btn-small fixedWidth" do %>
+              <i class="material-icons right">edit</i>Uredi
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tbody>
+        <tr>
+          <th scope="row">Korisnici</th>
+          <td>
+            <%= link_to users_path(), class: "waves-effect waves-light btn-small fixedWidth" do %>
+              <i class="material-icons right">edit</i>Uredi
+            <% end %>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+</main>

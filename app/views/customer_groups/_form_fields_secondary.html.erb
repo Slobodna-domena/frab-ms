@@ -1,0 +1,36 @@
+<%= hidden_field_tag "redirect_to", organisation_show_url(@item.id ? @item.id : "next") %>
+<%= f.input :title %>
+<%= f.input :parent_id, label: "Nad organizacija", collection: CustomerGroup.secondary.active.roots.order(id: :desc) %>
+<%= f.input :item_status, label: "Vrsta udruženja", collection: codes_for("Vrste udruženja") %>
+<%= f.input :description, input_html: {class: "materialize-textarea"} %>
+<label>
+<%= f.check_box :archived, id: "archived", class: "filled-in" %>
+<span>Arhiva</span>
+</label>
+<br><br><br>
+<%= f.input :address %>
+<%= f.input :phone %>
+<%= f.input :cell_phone %>
+<%= f.input :e_mail %>
+<br><br><br>
+<%= f.input :oib %>
+<%= f.input :iban %>
+<%= f.input :poziv_na_broj %>
+<%= f.input :payment_address %>
+<br><br><br>
+<h4>Kontakt odgovorne osobe</h4>
+<%= f.input :president_name %>
+<%= f.input :president_email %>
+<%= f.input :president_phone %>
+<%= f.input :president_cellphone %>
+<br><br><br>
+
+
+<%= link_to :back, class: "btn waves-effect waves-light blue-grey lighten-2" do %>
+  <i class="material-icons left">cancel</i>
+  Otkaži
+<% end %>&nbsp;
+<%= button_tag(type: 'submit', class: "btn waves-effect waves-light") do %>
+  <i class="material-icons left">save</i>
+  Spremi
+<% end %>

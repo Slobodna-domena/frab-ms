@@ -1,0 +1,39 @@
+<main>
+  <h3>Dokumenti</h3>
+  <section>
+    <%= render partial: "components/search",
+      locals: {path: documents_path,
+              filters: [["item_status", "Statusi dokumenata"],
+                        ["user_id", "Korisnici"],
+                        ["customer_group_id", "Vijeća"]]} %>
+    <div class="add">
+      <%= link_to documents_new_path, class: "waves-effect waves-light btn" do %>
+        <i class="material-icons left">post_add</i>Dodaj dokument
+      <% end %>
+    </div>
+  </section>
+
+  <section>
+    <%= link_to documents_view_path("card"), class: "btn waves-effect waves-light#{cookies[:view] != "list" ? " disabled" : nil}" do %>
+      <i class="medium material-icons">apps</i>
+    <% end %>
+    <%= link_to documents_view_path("list"), class: "btn waves-effect waves-light#{cookies[:view] == "list" ? " disabled" : nil}" do %>
+      <i class="medium material-icons">format_list_bulleted</i>
+    <% end %>
+  </section>
+
+  <% if @view == "list" %>
+    <div class="collection">
+      <% @items.each do |item| %>
+        <%= render partial: "components/list_item", locals: {data: item} %>
+      <% end %>
+    </div>
+  <% else %>
+    <section class="cards">
+      <% @items.each do |item| %>
+        <%= render partial: "components/card", locals: {data: item} %>
+      <% end %>
+    </section>
+  <% end %>
+  </section>
+</main>

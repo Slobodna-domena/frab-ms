@@ -1,0 +1,31 @@
+<main>
+  <section class="forms">
+    <h4><%= @code_group.title %></h4>
+    <%= simple_form_for @code_group, url: update_path do |f| %>
+      <%= hidden_field_tag "model", "code_group" %>
+      <%= hidden_field_tag "redirect_to", settings_url %>
+      <%= hidden_field_tag "id", @code_group.id %>
+      <%= f.input :title %>
+      <br />
+      <h5>Šifre</h5>
+      <div id="fieldsetContainer">
+        <%= f.simple_fields_for :codes do |code| %>
+          <fieldset>
+            <%= code.input :title %>
+            <%= code.input :sort %>
+            <br />
+          </fieldset>
+        <% end %>
+      </div>
+      <button id="addMore" class="btn waves-effect waves-light">
+        <i class="material-icons left">add</i>
+        Dodaj red
+      </button>
+      <br /><br /><br />
+      <%= button_tag(type: 'submit', class: "btn waves-effect waves-light") do %>
+        <i class="material-icons left">save</i>
+        Spremi
+      <% end %>
+    <% end %>
+  </section>
+</main>

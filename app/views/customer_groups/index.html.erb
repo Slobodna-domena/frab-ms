@@ -1,0 +1,78 @@
+<main>
+  <h3><%= @title_plural %></h3>
+  <section>
+    <%= render partial: "components/search", locals: {path: @group_type =="primary" ? customer_groups_path : organisations_path} %>
+
+    <%= render partial: "components/advanced_search", locals: {path: @group_type =="primary" ? customer_groups_path : organisations_path, model: CustomerGroup} %>
+
+    <div class="add">
+      <%= link_to @group_type == "primary" ? customer_groups_new_path : organisations_new_path, class: "waves-effect waves-light btn" do %>
+        <i class="material-icons left">group_add</i>Dodaj <%= @title_single %>
+      <% end %>
+      <%= link_to documents_new_path, class: "waves-effect waves-light btn" do %>
+        <i class="material-icons left">post_add</i>Dodaj dokument
+      <% end %>
+      <%= link_to entry_new_path, class: "waves-effect waves-light btn" do %>
+        <i class="material-icons left">add_comment</i>Dodaj zapis
+      <% end %>
+    </div>
+  </section>
+
+  <section>
+    <table class="highlight">
+      <thead>
+        <tr>
+          <th><%= @title_single %></th>
+          <th><%= @group_type == "primary" ? "Predsjednik" : "Odgovorna osoba" %></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @groups.each do |group| %>
+        <tr class="<%= group.id == @groups.first.id ? "main_group" : nil %>">
+          <td><%= group.parent_id.to_i > 0 ? group.title : @group_type == "primary" ? link_to(group.title, customer_groups_path(parent_id: group.id)) : link_to(group.title,organisations_path(parent_id: group.id)) %></td>
+          <td><%= group.president_name %></td>
+          <td>
+            <%= link_to "#", class: "waves-effect waves-light fixedWidth print", url: "#{customer_group_show_path(group.id)}" do %>
+              <i class="material-icons right">print</i>
+            <% end %>
+          </td>
+          <td>
+            <% if @group_type == "primary" %>
+              <%= link_to customer_group_show_path(group.id), class: "waves-effect waves-light btn-small fixedWidth" do %>
+                <i class="material-icons right">arrow_forward</i>Otvori
+              <% end %>
+            <% else %>
+            <%= link_to organisation_show_path(group.id), class: "waves-effect waves-light btn-small fixedWidth" do %>
+              <i class="material-icons right">arrow_forward</i>Otvori
+            <% end %>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+
+  <p>&nbsp;</p>
+
+  <% if @entries and @entries.any? %>
+    <h4>Zapisi</h4>
+    <section class="cards">
+      <% @entries.each do |item| %>
+        <%= render partial: "components/card", locals: {data: item} %>
+      <% end %>
+    </section>
+  <% end %>
+
+  <% if @documents and @documents.any? %>
+    <h4>Dokumenti</h4>
+    <section class="cards">
+      <% @documents.each do |item| %>
+        <%= render partial: "components/card", locals: {data: item} %>
+      <% end %>
+    </section>
+  <% end %>
+
+</main>
