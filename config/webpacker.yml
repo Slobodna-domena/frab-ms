@@ -54,7 +54,9 @@ development:
   compile: true
 
   # Verifies that correct packages and versions are installed by inspecting package.json, yarn.lock, and node_modules
-  check_yarn_integrity: true
+  # Disabled locally: yarn.lock is out of sync with package.json (installed node 16 vs required >=18), which
+  # otherwise blocks every rails command (console/runner/db:migrate) at boot, not just asset compilation.
+  check_yarn_integrity: false
 
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:

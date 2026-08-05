@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>frab-ms - Guide</title>
+<style>
+  @page { size: A4; margin: 15mm 15mm 15mm 15mm; }
+
+  :root {
+    --green: #1f9d55;
+    --green-dark: #14663a;
+    --ink: #1d2126;
+    --muted: #5d6672;
+    --line: #d8dde3;
+    --tint: #f4f7f9;
+    --warn: #b3541e;
+    --warn-bg: #fdf3e7;
+  }
+
+  * { box-sizing: border-box; }
+  html { font-size: 10pt; }
+  body {
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  header { border-bottom: 3px solid var(--green); padding-bottom: 12px; margin-bottom: 20px; }
+  header .rule { height: 5px; width: 64px; background: var(--green); margin-bottom: 14px; }
+  header h1 { font-size: 26pt; margin: 0 0 2px 0; letter-spacing: -0.4px; }
+  header p.sub { font-size: 11.5pt; color: var(--muted); margin: 0 0 10px 0; }
+  header p.note { font-size: 8.8pt; color: var(--muted); margin: 0; }
+
+  h2.part {
+    font-size: 9pt;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 700;
+    margin: 30px 0 4px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--line);
+    page-break-after: avoid;
+  }
+  h2.part span { color: var(--muted); letter-spacing: 0; text-transform: none; font-weight: 400; font-size: 9pt; }
+  p.part-lede { color: var(--muted); margin: 0 0 16px 0; font-size: 9.5pt; }
+
+  h3 { font-size: 12.5pt; margin: 18px 0 4px 0; page-break-after: avoid; }
+  p { margin: 0 0 8px 0; }
+  ul { margin: 0 0 8px 0; padding-left: 18px; }
+  li { margin-bottom: 2px; }
+
+  .crumb {
+    font-size: 8.3pt;
+    color: var(--muted);
+    background: var(--tint);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 1px 5px;
+    white-space: nowrap;
+  }
+  code {
+    font-family: "DejaVu Sans Mono", "Liberation Mono", Menlo, Consolas, monospace;
+    font-size: 0.87em;
+    background: var(--tint);
+    border-radius: 3px;
+    padding: 1px 3px;
+  }
+
+  figure { margin: 8px 0 16px 0; page-break-inside: avoid; }
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+  }
+  figcaption { font-size: 8.3pt; color: var(--muted); margin-top: 4px; }
+  figcaption b { color: var(--ink); }
+
+  .box {
+    border-left: 3px solid var(--green);
+    background: #edf6f0;
+    border-radius: 0 4px 4px 0;
+    padding: 8px 12px;
+    margin: 10px 0;
+    font-size: 9.3pt;
+  }
+  .box .label { font-weight: 700; color: var(--green-dark); text-transform: uppercase; font-size: 8pt; letter-spacing: 0.6px; margin-right: 4px; }
+  .box.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+  .box.warn .label { color: var(--warn); }
+
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 14px 0; font-size: 9.3pt; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 8.3pt; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); border-bottom: 2px solid var(--line); }
+
+  footer { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 8.3pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="rule"></div>
+  <h1>frab-ms</h1>
+  <p class="sub">Peer review &amp; solidarity-fee payments for a frab conference - a short guide for admin/crew and for speakers</p>
+  <p class="note">Written against the demo data (<code>demo2026</code>) seeded alongside frab's own <code>rails demo:seed</code>. Demo password for every account below: <code>test123</code>.</p>
+</header>
+
+<p>frab-ms is a small companion app that sits next to frab and adds two things it doesn't have out of the box: peer review of papers by other speakers, and collection of the solidarity fee / conference payment. It reads people, events and conferences straight out of frab's database - there's nothing to import.</p>
+
+<p>Everyone signs in at the same <span class="crumb">/users/sign_in</span> page. What they see afterwards depends entirely on their role:</p>
+
+<figure>
+  <img src="screenshots/00-login.png" alt="Sign-in page with e-mail and password fields">
+  <figcaption><b>Fig. 1</b> - The one sign-in page for every role. There's no self-registration here - accounts come from frab.</figcaption>
+</figure>
+
+<table>
+  <tr><th>Role</th><th>Sees</th></tr>
+  <tr><td><b>admin</b>, or <b>crew</b> with an <code>orga</code> conference role</td><td>Every conference's stats, the full participant list, and every paper - plus moderation actions (delete a review, mark someone paid).</td></tr>
+  <tr><td><b>submitter</b> (a speaker), or plain <b>crew</b></td><td>Only their own submitted papers, a queue of other people's papers assigned to them to review, and their own payment page.</td></tr>
+</table>
+
+<h2 class="part">Part 1 <span>&mdash; Admin &amp; crew</span></h2>
+<p class="part-lede">Everything, across every conference.</p>
+
+<h3>Conference dashboard</h3>
+<p>Signing in as an admin (or a crew member marked <code>orga</code> on a conference) lands on a dashboard listing every conference the app knows about, with a running count of submitted, reviewed and fully-reviewed papers, and the CfP window.</p>
+<figure>
+  <img src="screenshots/01-admin-dashboard.png" alt="Admin dashboard listing conferences and their paper counts">
+  <figcaption><b>Fig. 2</b> - The admin dashboard (<span class="crumb">orga@example.org</span>). Each conference this account has access to gets its own summary block.</figcaption>
+</figure>
+
+<h3>Participants &amp; payment status</h3>
+<p>From a conference's <span class="crumb">Show all participants</span> link, admin/crew get every registered person, their last payment-offer request, and a paid/unpaid toggle they can flip directly.</p>
+<figure>
+  <img src="screenshots/02-people-list.png" alt="Participant list with paid/unpaid status and actions">
+  <figcaption><b>Fig. 3</b> - Participants for DemoConf 2026. The <b>Paid</b> column is the one field admin/crew can set by hand; everything else is read from frab or from a request the speaker made themselves.</figcaption>
+</figure>
+
+<h3>Papers &amp; review progress</h3>
+<p>The conference's paper list shows every submission, its type, whether it's finished (three peer reviews in), and how many reviews/acceptances it has so far. A search box and an academic/practical filter (<span class="crumb">?prikaz=academic|practical</span>) narrow it down.</p>
+<figure>
+  <img src="screenshots/03-papers-list.png" alt="Full paper list for a conference with review counts">
+  <figcaption><b>Fig. 4</b> - Only papers whose type is <code>Paper Presentation</code>, <code>Special Session</code> or <code>Non-academic Session</code> ever enter the peer-review flow - the rest (regular talks, workshops, lightning talks) are frab content that this app doesn't review.</figcaption>
+</figure>
+
+<h3>Paper detail &amp; moderating reviews</h3>
+<p>Opening a paper shows its full submission content plus, for admin/crew only, every review it has received so far with the option to delete one (the bin icon) if it needs to be redone. Admin/crew can also file their own review from here.</p>
+<figure>
+  <img src="screenshots/04-paper-detail-admin.png" alt="Paper detail page with a reviews table, as seen by an admin">
+  <figcaption><b>Fig. 5</b> - A paper with one review in so far. A paper is <i>finished</i> once it has three peer reviews (or three reviewers have accepted it), whichever the review logic decides first.</figcaption>
+</figure>
+
+<div class="box">
+  <span class="label">Note</span> A conference's <b>solidarity-fee</b> data (who requested an offer, who's marked paid) lives per-account, not per-conference - the same participant list is used for every conference this app tracks.
+</div>
+
+<h2 class="part">Part 2 <span>&mdash; Speakers</span></h2>
+<p class="part-lede">Your own papers, your own reviews, your own payment.</p>
+
+<h3>Your review queue</h3>
+<p>A speaker who has submitted at least one paper sees a progress bar per conference (<code>reviews done / reviews required</code>, three per paper they submitted) and a stack of cards - other people's papers assigned to them to review. Each card can be <b>skip</b>ped, <b>accept</b>ed (claim it, review it later), or <b>open</b>ed straight away.</p>
+<figure>
+  <img src="screenshots/05-speaker-dashboard.png" alt="Speaker dashboard with a review progress bar and paper cards">
+  <figcaption><b>Fig. 6</b> - <span class="crumb">speaker1@example.org</span>'s queue. The check mark on a card means it's already been reviewed by this account; a card disappears once its own paper has three reviews from other people.</figcaption>
+</figure>
+<p>Papers are recommended by matching the reviewer's own submission's classifiers first, then filling the rest of the quota from whatever else is open - so nobody runs out of things to review just because their own paper happens to be a niche topic.</p>
+
+<h3>Reviewing a paper</h3>
+<p>Opening a paper to review shows its full content, then a slider per review metric the conference has configured (here: content quality, speaker experience, audience fit) plus a free-text comment. The final rating is the average of the sliders.</p>
+<figure>
+  <img src="screenshots/06-review-form.png" alt="Review form with sliders for each review metric and a comment box">
+  <figcaption><b>Fig. 7</b> - The review metrics shown here are set per conference, so a different event can ask reviewers to score different things.</figcaption>
+</figure>
+
+<h3>After you review</h3>
+<p>Once submitted, the paper's own page shows the reviewer their own score and note back - useful for double-checking what was sent before moving to the next paper in the queue.</p>
+<figure>
+  <img src="screenshots/07-paper-detail-speaker.png" alt="Paper detail page showing the signed-in reviewer's own rating and note">
+  <figcaption><b>Fig. 8</b> - Unlike the admin view (Fig. 5), a speaker only ever sees their own review on a paper, never anyone else's.</figcaption>
+</figure>
+
+<h3>Solidarity fee &amp; payment</h3>
+<p>Every signed-in account - speaker or crew - has its own payment page: pick a country, optionally add the solidarity fee or student rate, fill in billing details, and request an offer by email. An offer can only be requested again after 15 days, so the button hides itself while a request is still fresh.</p>
+<figure>
+  <img src="screenshots/08-payment-page.png" alt="Payment page with conference fee tiers, country selector and a request-offer button">
+  <figcaption><b>Fig. 9</b> - A first-time visit: no offer requested yet, so the <b>Request offer</b> button is live. Admin/crew see the outcome of this per-person on the participant list (Fig. 3).</figcaption>
+</figure>
+
+<div class="box warn">
+  <span class="label">Careful</span> The solidarity-fee amounts and date brackets on this page (early bird / regular / developing-country pricing) are hardcoded for one specific conference's fee schedule - update them in <code>app/views/payment/_form_fields_left.html.erb</code> before reusing this app for a different event.
+</div>
+
+<footer>
+  Screenshots live in <code>doc/manual/screenshots/</code> and are regenerated with <code>doc/manual/capture_screenshots.rb</code> against a running server and freshly-seeded demo data (<code>db/seeds.rb</code>) - see <code>doc/manual/README.md</code>.
+</footer>
+
+</body>
+</html>

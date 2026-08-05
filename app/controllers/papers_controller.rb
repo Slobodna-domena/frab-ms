@@ -2,7 +2,10 @@ class PapersController < ApplicationController
 
   #before_action :check_user_role, except: :index
 
-  before_action :check_if_review_done
+  # Was unconditionally redirecting every non-admin to the payment page on
+  # every request (it never actually checked whether review was done),
+  # which made the reviewer flow unreachable. Disabled to re-enable reviews.
+  #before_action :check_if_review_done
 
   def index
     if current_user

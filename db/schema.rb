@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220830113330) do
+ActiveRecord::Schema.define(version: 20260730080000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20220830113330) do
     t.string "allowed_event_types", default: "lecture;workshop;podium;lightning_talk;meeting;film;concert;djset;performance;other"
     t.string "allowed_event_timeslots_csv", limit: 400
     t.string "bcc_address", limit: 255
+    t.integer "mail_sent", default: [], array: true
     t.index ["acronym"], name: "index_conferences_on_acronym"
     t.index ["parent_id"], name: "index_conferences_on_parent_id"
   end
@@ -192,6 +193,7 @@ ActiveRecord::Schema.define(version: 20220830113330) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "peer", default: false
     t.index ["event_id"], name: "index_event_ratings_on_event_id"
     t.index ["person_id"], name: "index_event_ratings_on_person_id"
   end
@@ -242,6 +244,22 @@ ActiveRecord::Schema.define(version: 20220830113330) do
     t.text "tech_rider"
     t.string "invite_token"
     t.string "video_url", limit: 255
+    t.text "coauthors"
+    t.string "coauthor_1"
+    t.string "coauthor_2"
+    t.string "coauthor_3"
+    t.string "coauthor_4"
+    t.string "coauthor_5"
+    t.string "coauthor_1_name"
+    t.string "coauthor_1_last_name"
+    t.string "coauthor_2_name"
+    t.string "coauthor_2_last_name"
+    t.string "coauthor_3_name"
+    t.string "coauthor_3_last_name"
+    t.string "coauthor_4_name"
+    t.string "coauthor_4_last_name"
+    t.string "coauthor_5_name"
+    t.string "coauthor_5_last_name"
     t.index ["conference_id"], name: "index_events_on_conference_id"
     t.index ["event_type"], name: "index_events_on_type"
     t.index ["guid"], name: "index_events_on_guid", unique: true
@@ -325,6 +343,22 @@ ActiveRecord::Schema.define(version: 20220830113330) do
     t.integer "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "country"
+    t.boolean "status"
+    t.string "document"
+    t.string "billing_name"
+    t.string "billing_address"
+    t.string "billing_vat"
+    t.integer "payment_status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "c_list"
+    t.boolean "solidarity_fee"
+    t.datetime "request_date"
   end
 
   create_table "people", force: :cascade do |t|
@@ -477,6 +511,7 @@ ActiveRecord::Schema.define(version: 20220830113330) do
     t.integer "user_id"
     t.integer "skipped", default: [], array: true
     t.integer "accepted", default: [], array: true
+    t.boolean "paid", default: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -503,6 +538,8 @@ ActiveRecord::Schema.define(version: 20220830113330) do
     t.datetime "locked_at"
     t.string "provider"
     t.string "uid"
+    t.boolean "gdpr"
+    t.integer "counter"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

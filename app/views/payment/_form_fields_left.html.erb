@@ -48,11 +48,9 @@
 <% if @item.request_date && (Date.today - @item.request_date.to_date).to_i <= 15 %>
 <p style="color:red">The offer has already been requested on <%= @item.request_date.strftime("%d.%m.%Y %H:%M")%>. Please check your email and make sure it hasn't been added to your spam folder. If you wish to request a new offer please contact us at <a href="mailto:support@odrast.hr">support@odrast.hr</a></p>
 <% else %>
-<% if Date.today <= "31-05-2023".to_date %>
-  <%= button_tag type: 'submit', class: "btn waves-effect waves-light" do %>
-    <i class="material-icons left">credit_card</i>
-    Request offer
-  <% end %>
+<%= button_tag type: 'submit', class: "btn waves-effect waves-light" do %>
+  <i class="material-icons left">credit_card</i>
+  Request offer
 <% end %>
 <% end %>
 

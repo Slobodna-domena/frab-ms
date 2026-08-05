@@ -1,0 +1,20 @@
+# Local database config (gitignored intentionally empty in git; populate before running).
+# Points at the same frab PostgreSQL database this app extends, using peer
+# authentication over the unix socket (matches /frab's config/database.yml).
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  min_messages: ERROR
+
+development:
+  <<: *default
+  database: frab_development
+
+test:
+  <<: *default
+  database: frab_test
+
+production:
+  <<: *default
+  database: frab_production
