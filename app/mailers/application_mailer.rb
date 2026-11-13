@@ -11,7 +11,6 @@ class ApplicationMailer < ActionMailer::Base
   def send_offer_to
     @user = User.find_by(id: params[:user_id])
     if @user
-      #TODO cc
       @amount = 0.0
       if @user.payment.status || @user.payment.country_name.in?(Payment::COUNTRIES)
         @amount = 180.0
@@ -23,11 +22,7 @@ class ApplicationMailer < ActionMailer::Base
       if @user.payment.solidarity_fee
         @amount = @amount + 60.0
       end
-      if @user.id == 770
-	mail(to: @user.email, subject: "Zagreb Degrowth Conference - Payment Instructions")
-      else
-      	mail(to: @user.email, subject: "Zagreb Degrowth Conference - Payment Instructions", cc: "info@door.hr")
-      end
+      mail(to: @user.email, subject: "Zagreb Degrowth Conference - Payment Instructions")
     end
   end
 end
