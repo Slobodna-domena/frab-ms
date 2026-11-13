@@ -17,7 +17,8 @@ class Conference < ApplicationRecord
   end
 
   def cfp_ended
-    self.call_for_participation.end_date < DateTime.now
+    cfp = self.call_for_participation
+    cfp.present? && cfp.end_date.present? && cfp.end_date < DateTime.now
   end
 
   def number_of_finished_papers

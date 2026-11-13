@@ -10,7 +10,8 @@
           <p>Number of papers: <%= conference.number_of_papers%></p>
           <p>Number of reviewed papers: <%= conference.number_of_papers%></p>
           <p>Number of finished papers: <%= conference.number_of_finished_papers %></p>
-          <p>Call for participation: <%= conference.call_for_participation.start_date %> to <%= conference.call_for_participation.end_date %></p>
+          <% cfp = conference.call_for_participation %>
+          <p>Call for participation: <%= cfp ? "#{cfp.start_date} to #{cfp.end_date}" : "not set up" %></p>
         </section>
     <% end %>
   <% else %>
